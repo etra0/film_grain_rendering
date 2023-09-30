@@ -7,6 +7,7 @@ CXXOPT    = -O2 -ftree-vectorize -funroll-loops#
 CXXFLAGS  =  -std=c++11 -Wall -Wextra # -g # 
 INCPATH   = -Isrc -I/usr/local/include/
 LDFLAGS   = -lpng -ltiff
+C_FLAGS   = -Wall -Wextra  -g # 
 LIBS      =
 
 ifdef OMP
@@ -45,7 +46,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "===== Compile $< ====="
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(CXXOPT) $(INCPATH) -c $< -o $@
+	$(CC) $(C_FLAGS) $(CXXOPT) $(INCPATH) -c $< -o $@
 
 clean:
 	@echo "===== Clean $< ====="
