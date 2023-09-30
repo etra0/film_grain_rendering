@@ -494,7 +494,7 @@ int main(int argc, char* argv[])
 
 	delete imgInFloat;
 	delete imgIn;
-	delete imgOut;
+	delete[] imgOut;
 	
 	gettimeofday(&end, NULL);
 	double elapsedTime = (end.tv_sec  - start.tv_sec) + 

@@ -40,7 +40,7 @@ int choose_rendering_algorithm(const std::string& inputFile, float muR, float si
             }
             else
             {
-            	delete switchPoints;
+            	delete[] switchPoints;
             	std::cout << "Error in choose_rendering_algorithm, failure to read the switch point file." << std::endl;
 				return(PIXEL_WISE);
             }
@@ -49,7 +49,7 @@ int choose_rendering_algorithm(const std::string& inputFile, float muR, float si
     }
     else
     {
-    	delete switchPoints;
+    	delete[] switchPoints;
     	std::cout << "Error in choose_rendering_algorithm, failure to read the switch point file." << std::endl;
 		return(PIXEL_WISE);
     }
@@ -63,17 +63,17 @@ int choose_rendering_algorithm(const std::string& inputFile, float muR, float si
 			//the standard deviation is small, so we use the pixel-wise algorithm
 			if ( (sigmaR) <= switchPoints[2*i+1] )
 			{
-				delete switchPoints;
+				delete[] switchPoints;
 				return(PIXEL_WISE);
 			}
 			else //the standard deviation is large, so we use the grain-wise algorithm
 			{
-				delete switchPoints;
+				delete[] switchPoints;
 				return(GRAIN_WISE);
 			}
 		}
 	}
-	delete switchPoints;
+	delete[] switchPoints;
 	return(PIXEL_WISE);
 }
 
@@ -310,8 +310,8 @@ matrix<float>* film_grain_rendering_pixel_wise(matrix<float> *imgIn, filmGrainOp
 		}
 	}
 
-	delete xGaussianList;
-	delete yGaussianList;
+	delete[] xGaussianList;
+	delete[] yGaussianList;
 	return(imgOut);
 }
 
@@ -520,7 +520,7 @@ matrix<float>* film_grain_rendering_grain_wise(matrix<float> *imgIn,
 	{
 		delete imgTempPtr[i];
 	}
-	delete imgTempPtr;
+	delete[] imgTempPtr;
 	return(imgOut);
 }
 

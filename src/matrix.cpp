@@ -222,7 +222,7 @@ void matrix<T>::delete_rows(int a, int b)
 			matValues[sub_to_ind(mNew,nNew,i,j,matIndexing)] = valTemp;
 			//std::cout<< "ind 2" << sub_to_ind(mNew,nNew,i,j,matIndexing) << std::endl;
 		}
-	delete tabTemp;
+	delete[] tabTemp;
 	//reset the size of the matrix
 	m =mNew;
 	n = nNew;
