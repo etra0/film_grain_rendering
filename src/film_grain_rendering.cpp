@@ -292,7 +292,7 @@ matrix<float>* film_grain_rendering_pixel_wise(matrix<float> *imgIn, filmGrainOp
 
 	unsigned int i,j;
 	float *ptrTemp,pixTemp;
-	#pragma omp parallel for schedule(dynamic, 2) private(i,j,ptrTemp,pixTemp) shared(imgOut)
+	#pragma omp parallel for schedule(static) private(i,j,ptrTemp,pixTemp) shared(imgOut)
 	for (i=0; i<(unsigned int)imgOut->get_nrows(); i++)
 	{
 		for (j=0; j<(unsigned int)imgOut->get_ncols(); j++)
