@@ -1,25 +1,25 @@
 
 #include "libtiff_io.h"
 
-float * read_tiff_image(const char* inputFile, uint32 *widthOut, uint32 *heightOut, uint32 *nChannels)
+float * read_tiff_image(const char* inputFile, std::uint32_t *widthOut, std::uint32_t *heightOut, std::uint32_t *nChannels)
 {
 
 	TIFF *tifFile=TIFFOpen(inputFile, "r");
 	//get height and width of image
-	TIFFGetField(tifFile, TIFFTAG_IMAGEWIDTH, widthOut);           // uint32 width;
-	TIFFGetField(tifFile, TIFFTAG_IMAGELENGTH, heightOut);        // uint32 height;
+	TIFFGetField(tifFile, TIFFTAG_IMAGEWIDTH, widthOut);           // std::uint32_t width;
+	TIFFGetField(tifFile, TIFFTAG_IMAGELENGTH, heightOut);        // std::uint32_t height;
 	TIFFGetField(tifFile, TIFFTAG_IMAGEDEPTH, nChannels);
 	*nChannels = (int)fmax((float)*nChannels,(float)1.0);
 	*nChannels = (int)fmin((float)*nChannels,(float)MAX_CHANNELS);
 
 	std::cout << "Image size : " << *widthOut << " x " <<
 			*heightOut << " x " << *nChannels << std::endl;
-	uint32 width = *widthOut;
-	uint32 height = *heightOut;
+    std::uint32_t width = *widthOut;
+	std::uint32_t height = *heightOut;
 
 	//reserve temporary space for the image
-	uint32 npixels=(uint32)(width*height);
-	uint32* raster=(uint32*) _TIFFmalloc(npixels *sizeof(uint32));
+    std::uint32_t npixels=(std::uint32_t)(width*height);
+    std::uint32_t* raster=(std::uint32_t*) _TIFFmalloc(npixels *sizeof(std::uint32_t));
 
 	float *outputImg = new float[npixels*(*nChannels)];
 	//read the image
@@ -28,9 +28,9 @@ float * read_tiff_image(const char* inputFile, uint32 *widthOut, uint32 *heightO
 		if (TIFFReadRGBAImage(tifFile, width, height, raster, 0) != 0)
 		{
 			//copy image information into the matrix
-			for (uint32 i=0; i<height; i++)
-				for (uint32 j=0; j<width; j++)
-					for (uint32 c=0; c<(*nChannels); c++)
+			for (std::uint32_t i=0; i<height; i++)
+				for (std::uint32_t j=0; j<width; j++)
+					for (std::uint32_t c=0; c<(*nChannels); c++)
 					{
 						int iRaster = height-i-1;	//note, the libtiff stores the image from the bottom left as the origin
 						switch(c)
@@ -77,12 +77,12 @@ float * read_tiff_image(const char* inputFile, uint32 *widthOut, uint32 *heightO
 int write_tiff_image(float* inputImg, unsigned int n, unsigned int m,
 	unsigned int nChannels, const char* outputFile)
 {
-	uint32 width,height;
-	width = (uint32)n;
-	height = (uint32)m;
+    std::uint32_t width,height;
+	width = (std::uint32_t)n;
+	height = (std::uint32_t)m;
 
 	//parameters
-	uint32 samplePerPixel = nChannels;
+    std::uint32_t samplePerPixel = nChannels;
 
 	TIFF *tifFile= TIFFOpen(outputFile, "w");
 	//set parameters of image
@@ -119,12 +119,12 @@ int write_tiff_image(float* inputImg, unsigned int n, unsigned int m,
 	//std::cout << "width*samplePerPixel : " << width*samplePerPixel << std::endl;
 
 	//Now writing image to the file one strip at a time
-	for (uint32 i = 0; i < height; i++)
+	for (std::uint32_t i = 0; i < height; i++)
 	{
 		//copy the image information into a temporary buffer
-		for (uint32 j=0; j<width; j++)
+		for (std::uint32_t j=0; j<width; j++)
 		{	//the tiff stores the image info in the following order : RGB
-			for (uint32 c=0; c<nChannels; c++)
+			for (std::uint32_t c=0; c<nChannels; c++)
 				bufChar[j*nChannels+c] = (unsigned char)(round( inputImg[j + i*width + c*width*height]) );
 		}
 		std::memcpy(buf, bufChar, lineBytes);	//copy information to special Tiff buffer

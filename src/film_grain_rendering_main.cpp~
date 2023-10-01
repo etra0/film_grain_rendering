@@ -163,7 +163,7 @@ int main(int argc, char* argv[])
 	/*************   READ INPUT IMAGE   ***************/
 	/**************************************************/
 	float *imgInFloat;
-	uint32 widthIn, heightIn;
+    std::uint32_t widthIn, heightIn;
 
 	//check the extension of the input file
 	if (strcmp((const char*)(getFileExt(fileNameIn).c_str()),"tiff")==0)

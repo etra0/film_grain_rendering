@@ -10,8 +10,8 @@
 
 	#define MAX_CHANNELS 3
 
-	float* read_tiff_image(const char* inputFile, uint32 *width,
-		uint32 *height, uint32 *nChannels);
+	float* read_tiff_image(const char* inputFile, std::uint32_t *width,
+		std::uint32_t *height, std::uint32_t *nChannels);
 
 	int write_tiff_image(float* inputImg, unsigned int n, unsigned int m,
 	unsigned int nChannels, const char* outputFile);

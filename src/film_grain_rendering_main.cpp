@@ -246,7 +246,7 @@ int main(int argc, char* argv[])
 	//check the extension of the input file
 	if (strcmp((const char*)(getFileExt(fileNameIn).c_str()),"tiff")==0)
 	{
-		uint32 widthTemp, heightTemp, nChannelsTemp;
+        std::uint32_t widthTemp, heightTemp, nChannelsTemp;
 		imgInFloat = read_tiff_image((const char*)((fileNameIn).c_str()),
 			&widthTemp, &heightTemp, &nChannelsTemp);
 		widthIn = (size_t)widthTemp;
