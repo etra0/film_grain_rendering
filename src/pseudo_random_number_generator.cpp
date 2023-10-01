@@ -153,7 +153,7 @@ unsigned int my_rand_poisson(noise_prng *p, const float lambda, float prodIn)
     float u=myrand_uniform_0_1(p);
     unsigned int x=0u;
     float prod;
-    if (prodIn <= 0)
+    if (prodIn <= 0) [[likely]]
       prod = exp(-lambda); /* this should be passed as an argument if used extensively with the same value lambda */
     else
       prod = prodIn;
